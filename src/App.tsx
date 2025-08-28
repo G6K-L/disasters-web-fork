@@ -265,7 +265,7 @@ export default function App() {
           </h1>
           <p className="text-xl text-slate-300 max-w-3xl mx-auto">Plateforme d'entraînement avancée pour l'optimisation web et l'éco-conception</p>
         </header>
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-16">
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           <Card icon={<Database className="w-8 h-8 text-purple-400" />} title="Poids HTML" value={`${(stats.bundle / 1_024).toFixed(0)} kB`} tone={color(stats.bundle, limits.weight)} tip="transferSize du document" />
           <Card icon={<Globe className="w-8 h-8 text-blue-400" />} title="Poids page" value={`${(stats.weight / 1_024).toFixed(0)} kB`} tone={color(stats.weight, limits.weight)} tip="somme transferSize" />
           <Card icon={<Layers className="w-8 h-8 text-teal-400" />} title="DOM" value={stats.dom} tone={color(stats.dom, limits.dom)} tip="nombre de nœuds" />
@@ -278,6 +278,12 @@ export default function App() {
           <Card icon={<Cpu className="w-8 h-8 text-indigo-400" />} title="CPU" value={stats.load} tone="bg-white/10 border-white/20" />
           <Card icon={<Activity className="w-8 h-8 text-lime-400" />} title="RPS" value={stats.rps} tone="bg-white/10 border-white/20" />
           <Card icon={<Timer className="w-8 h-8 text-yellow-400" />} title="Load page" value={`${stats.pl} ms`} tone="bg-white/10 border-white/20" />
+          <CardWithImage title="Train complet" imageUrl="https://images.unsplash.com/photo-1626544001303-f60b92396d47?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
+          <CardWithImage title="Envie de prolonger votre été ?" imageUrl="https://images.unsplash.com/photo-1473625247510-8ceb1760943f?q=80&w=1711&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
+          <CardWithImage title="Nos idées pour les vacances" imageUrl="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1746&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
+          <CardWithImage title="Vente flash" imageUrl="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
+          <CardWithImage title="Où partir ?" imageUrl="https://images.unsplash.com/photo-1530789253388-582c481c54b0?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
+          <CardWithImage title="Les abonnements" imageUrl="https://images.unsplash.com/photo-1670888664952-efff442ec0d2?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
         </section>
         <section className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 mb-16">
           <div className="flex items-center gap-4 mb-6">
@@ -302,6 +308,24 @@ function Card({ icon, title, value, tone, tip }: { icon: React.ReactNode; title:
         <span className="text-3xl font-bold text-white">{value}</span>
       </div>
       <h3 className="text-lg font-semibold text-white">{title}</h3>
+    </div>
+  )
+}
+
+function CardWithImage({ title, imageUrl }: { title: string; imageUrl: string }) {
+  return (
+    <div className="relative p-6 rounded-lg border border-white/20 overflow-hidden h-[300px]">
+      <img
+        src={imageUrl}
+        className="absolute inset-0 w-full h-full object-cover -z-10"
+        alt=""
+      />
+      <div className="relative z-10 flex items-center gap-4">
+        <div>
+          <span className="text-3xl font-bold text-white">{title}</span>
+        </div>
+      </div>
+           <h3 className="text-lg font-semibold text-white">{"simulation"}</h3>
     </div>
   )
 }
