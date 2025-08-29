@@ -1,8 +1,14 @@
+// Chargement du CSS
 const link = document.createElement("link");
 link.rel = "stylesheet";
 link.href = "http://localhost:5001/static/big.css";
 document.head.appendChild(link);
 
+
+// CODE DE DEGRATION DES PERFORMANCES (CPU, mémoire, DOM, réseau) pour entraînement
+
+/*
+// Crée une grande chaîne de caractères et une fuite mémoire
 const junk = Array.from({ length: 4096 }, () =>
   "junk".repeat(2048)
 ).join("");
@@ -13,12 +19,14 @@ setInterval(() => {
   if (leak.length > 128) leak.splice(0, 64);
 }, 500);
 
+// Boucle bloquante qui surcharge le CPU
 function burn(ms = 30) {
   const end = performance.now() + ms;
   while (performance.now() < end) Math.sin(Math.random() * 1e6);
 }
 setInterval(() => burn(), 250);
 
+// Ajoute des listeners à chaque mouvement de souris/tactile
 const listeners = [];
 for (let i = 0; i < 500; i++) {
   const fn = () => burn(5);
@@ -27,6 +35,7 @@ for (let i = 0; i < 500; i++) {
   listeners.push(fn);
 }
 
+// Crée des éléments DOM avec des animations et des styles lourds
 function inflateDOM() {
   const root = document.body;
   for (let i = 0; i < 50; i++) {
@@ -43,7 +52,9 @@ function inflateDOM() {
   }
 }
 inflateDOM();
+*/
 
+// Envoie des requêtes réseau répétées
 async function spam() {
   try {
     await fetch(`http://localhost:5001/api/payload?ts=${Date.now()}`);
@@ -51,12 +62,15 @@ async function spam() {
 }
 setInterval(spam, 3000);
 
+/*
+// Change la teinte d'une variable CSS toute les 500ms
 let hue = 0;
 setInterval(() => {
   hue = (hue + 3) % 360;
   document.documentElement.style.setProperty("--h", hue.toString());
 }, 500);
 
+// Crée un tableau géant et utilise un algorithme de tri lent
 const giant = [];
 for (let i = 0; i < 256_000; i++) {
   giant.push(i ^ (i << 1));
@@ -68,3 +82,4 @@ function slowSort(arr) {
       if (arr[i] < arr[j]) [arr[i], arr[j]] = [arr[j], arr[i]];
 }
 setTimeout(() => slowSort(giant.slice(0, 8_192)), 3_000);
+*/
