@@ -1,0 +1,202 @@
+[
+  {
+    "id": "11246",
+    "nameStation": "Marseille Saint-Charles",
+    "region": "Provence-Alpes-Côte d'Azur",
+    "transports": [1, 2, "M1", "M2"],
+    "transportType": "gare",
+    "icon": "gare.jpeg"
+  },
+  {
+    "id": "11247",
+    "nameStation": "Gare de Lyon",
+    "region": "Île-de-France",
+    "transports": [1, 14, "A", "D"],
+    "transportType": "gare",
+    "icon": "gare.jpeg"
+  },
+  {
+    "id": "11248",
+    "nameStation": "Aéroport Charles de Gaulle 2 TGV",
+    "region": "Île-de-France",
+    "transports": ["B", "CDGVAL"],
+    "transportType": "aeroport",
+    "icon": "aeroport.jpeg"
+  },
+  {
+    "id": "11249",
+    "nameStation": "Lille Flandres",
+    "region": "Hauts-de-France",
+    "transports": [1, 2],
+    "transportType": "gare",
+    "icon": "gare.jpeg"
+  },
+  {
+    "id": "11250",
+    "nameStation": "Strasbourg-Ville",
+    "region": "Grand Est",
+    "transports": ["A", "D", "TER"],
+    "transportType": "gare",
+    "icon": "gare.jpeg"
+  },
+  {
+    "id": "11251",
+    "nameStation": "Bordeaux Saint-Jean",
+    "region": "Nouvelle-Aquitaine",
+    "transports": ["C", "D", "TGV"],
+    "transportType": "gare",
+    "icon": "gare.jpeg"
+  },
+  {
+    "id": "11252",
+    "nameStation": "Nantes",
+    "region": "Pays de la Loire",
+    "transports": [1, "C2", "C3"],
+    "transportType": "gare",
+    "icon": "gare.jpeg"
+  },
+  {
+    "id": "11253",
+    "nameStation": "Lyon Part-Dieu",
+    "region": "Auvergne-Rhône-Alpes",
+    "transports": ["B", "T1", "T3", "T4"],
+    "transportType": "gare",
+    "icon": "gare.jpeg"
+  },
+  {
+    "id": "11254",
+    "nameStation": "Rennes",
+    "region": "Bretagne",
+    "transports": ["A", "B", "TGV"],
+    "transportType": "gare",
+    "icon": "gare.jpeg"
+  },
+  {
+    "id": "11255",
+    "nameStation": "Toulouse Matabiau",
+    "region": "Occitanie",
+    "transports": ["A", "TA"],
+    "transportType": "gare",
+    "icon": "gare.jpeg"
+  },
+  {
+    "id": "11256",
+    "nameStation": "Montpellier Saint-Roch",
+    "region": "Occitanie",
+    "transports": [1, 2, 3, 4],
+    "transportType": "gare",
+    "icon": "gare.jpeg"
+  },
+  {
+    "id": "11257",
+    "nameStation": "Nice-Ville",
+    "region": "Provence-Alpes-Côte d'Azur",
+    "transports": [1, "TGV", "TER"],
+    "transportType": "gare",
+    "icon": "gare.jpeg"
+  },
+  {
+    "id": "11258",
+    "nameStation": "Avignon TGV",
+    "region": "Provence-Alpes-Côte d'Azur",
+    "transports": ["TGV", "TER", 10],
+    "transportType": "gare",
+    "icon": "gare.jpeg"
+  },
+  {
+    "id": "11259",
+    "nameStation": "Port de Marseille Fos",
+    "region": "Provence-Alpes-Côte d'Azur",
+    "transports": [35, 36],
+    "transportType": "port",
+    "icon": "port.jpeg"
+  },
+  {
+    "id": "11260",
+    "nameStation": "Aéroport de Lyon-Saint Exupéry",
+    "region": "Auvergne-Rhône-Alpes",
+    "transports": ["Rhônexpress"],
+    "transportType": "aeroport",
+    "icon": "aeroport.jpeg"
+  },
+  {
+    "id": "11261",
+    "nameStation": "Gare du Nord",
+    "region": "Île-de-France",
+    "transports": [4, 5, "B", "D", "E"],
+    "transportType": "gare",
+    "icon": "gare.jpeg"
+  },
+  {
+    "id": "11262",
+    "nameStation": "Le Havre",
+    "region": "Normandie",
+    "transports": ["A", "B", 1, 2],
+    "transportType": "port",
+    "icon": "port.jpeg"
+  },
+  {
+    "id": "11263",
+    "nameStation": "Grenoble",
+    "region": "Auvergne-Rhône-Alpes",
+    "transports": ["A", "B"],
+    "transportType": "gare",
+    "icon": "gare.jpeg"
+  },
+  {
+    "id": "11264",
+    "nameStation": "Dijon-Ville",
+    "region": "Bourgogne-Franche-Comté",
+    "transports": ["T1", "T2"],
+    "transportType": "gare",
+    "icon": "gare.jpeg"
+  },
+  {
+    "id": "11265",
+    "nameStation": "Tours",
+    "region": "Centre-Val de Loire",
+    "transports": ["A"],
+    "transportType": "gare",
+    "icon": "gare.jpeg"
+  },
+  {
+    "id": "11266",
+    "nameStation": "Angers Saint-Laud",
+    "region": "Pays de la Loire",
+    "transports": ["A"],
+    "transportType": "gare",
+    "icon": "gare.jpeg"
+  },
+  {
+    "id": "11267",
+    "nameStation": "Clermont-Ferrand",
+    "region": "Auvergne-Rhône-Alpes",
+    "transports": ["A", 3, 4],
+    "transportType": "gare",
+    "icon": "gare.jpeg"
+  },
+  {
+    "id": "11268",
+    "nameStation": "Aéroport de Marseille Provence",
+    "region": "Provence-Alpes-Côte d'Azur",
+    "transports": ["L91", "17"],
+    "transportType": "aeroport",
+    "icon": "aeroport.jpeg"
+  },
+  {
+    "id": "11269",
+    "nameStation": "Gare Montparnasse",
+    "region": "Île-de-France",
+    "transports": [4, 6, 12, 13],
+    "transportType": "gare",
+    "icon": "gare.jpeg"
+  },
+  {
+    "id": "11270",
+    "nameStation": "Brest",
+    "region": "Bretagne",
+    "transports": ["A", 1, 2, 3],
+    "transportType": "port",
+    "icon": "port.jpeg"
+  }
+]
