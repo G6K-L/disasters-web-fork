@@ -1,4 +1,8 @@
-@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css');
+/* FICHIER DE STYLES CSS et CODE DE DEGRATION DES PERFORMANCES pour entraînement*/ 
+
+/* Bootstrap 5 : charge toute la bibliothèque CSS de Bootstrap (gros fichier)*/ 
+@import "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css";
+/* Polices charger avec toutes leurs graisses (très lourd) */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
@@ -10,7 +14,8 @@
 @tailwind components;
 @tailwind utilities;
 
-
+/* Applique toutes les polices importées à tous les éléments (*)
+ (le navigateur doit télécharger et rendre toutes ces polices) */
 * {
   font-family: 'Inter', 'Poppins', 'Roboto', 'Open Sans', 'Lato', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -19,6 +24,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Classes inutiles */
 .unused-class-1 { color: red; background: blue; padding: 100px; margin: 50px; }
 .unused-class-2 { font-size: 72px; font-weight: 900; text-shadow: 5px 5px 10px rgba(0,0,0,0.5); }
 .unused-class-3 { animation: spin 1s infinite; transform: rotate(360deg) scale(2) translate(100px, 100px); }
@@ -54,6 +60,7 @@
   animation: mega-waste 5s infinite ease-in-out;
 }
 
+/* Animations très gourmandes en CPU/GPU */
 @keyframes waste-cpu {
   0% { transform: rotate(0deg) scale(1) translateX(0); }
   25% { transform: rotate(90deg) scale(1.5) translateX(100px); }
