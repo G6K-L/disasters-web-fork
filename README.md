@@ -31,7 +31,32 @@ L'application sera disponible sur :
 - `npm run build` - Build de production
 - `npm run lint` - Analyse du code
 
-## 📈 Métriques en Temps Réel
+### Organisation du versioning
+
+Branches :
+
+- `main` : projet original disaster-web
+- `simulation` : modification du projet original et implémentation pour simuler le service numérique étudié. Toutes les implémentations de BP partiront de cette branche
+
+Naming des branches d'implémentation de BP :
+
+- en minuscules
+- <`numero tache`>-<`type de modif`>/<`nom de la modif`>
+ex : `001-refactor/lazy-loading`
+
+Implémentationdes BP : 1 branche par BP.
+
+## Inteface sur branche `simulation`
+
+La plateforme simule des données de page d'accueil avec photos et des données relatives à la réservation d'un billet de train :
+
+- **Nombre de place restantes** : simulation de mise à jour
+- **Prix** : simulation de mise à jour
+- **Quantité d'objets affichés lors de la récupération d'une liste** : simulation
+- **Grille d'éléments visuels** : sert de contenu pour pousser les images hors de la surface affichable pour simuler un chargement inutile
+
+
+## 📈 Métriques en Temps Réel (interface sur branche `main`)
 
 La plateforme affiche en continu :
 
