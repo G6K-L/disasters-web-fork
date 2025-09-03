@@ -394,18 +394,19 @@ useEffect(() => {
           <Card icon={<FileSearch className="w-8 h-8 text-lime-400" />} title="Détail d’un trajet" value="9 propriétés" tone={color(stats.css, limits.css)} />
           <Card icon={<Armchair className="w-8 h-8 text-yellow-400" />} title="Attribution place libre" value="siège 22" tone={color(stats.css, limits.css)} />
           <Card icon={<Network className="w-8 h-8 text-yellow-400" />} title="Simulation" value="requêtes" tone="bg-white/10 border-white/20" />
-          <CardWithImage title="Train complet" imageUrl="https://images.unsplash.com/photo-1626544001303-f60b92396d47?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-          <CardWithImage title="Envie de prolonger votre été ?" imageUrl="https://images.unsplash.com/photo-1473625247510-8ceb1760943f?q=80&w=1711&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-          <CardWithImage title="Nos idées pour les vacances" imageUrl="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1746&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-          <CardWithImage title="Vente flash" imageUrl="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-          <CardWithImage title="Où partir ?" imageUrl="https://images.unsplash.com/photo-1530789253388-582c481c54b0?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-          <CardWithImage title="Les abonnements" imageUrl="https://images.unsplash.com/photo-1670888664952-efff442ec0d2?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-          <CardWithImage title="Train complet" imageUrl="https://images.unsplash.com/photo-1626544001303-f60b92396d47?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-          <CardWithImage title="Envie de prolonger votre été ?" imageUrl="https://images.unsplash.com/photo-1473625247510-8ceb1760943f?q=80&w=1711&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-          <CardWithImage title="Nos idées pour les vacances" imageUrl="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1746&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-          <CardWithImage title="Vente flash" imageUrl="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-          <CardWithImage title="Où partir ?" imageUrl="https://images.unsplash.com/photo-1530789253388-582c481c54b0?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-          <CardWithImage title="Les abonnements" imageUrl="https://images.unsplash.com/photo-1670888664952-efff442ec0d2?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
+          
+          <CardWithImage title="Train complet" imageUrl="https://images.unsplash.com/photo-1626544001303-f60b92396d47?q=80&w=500&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
+          <CardWithImage title="Envie de prolonger votre été ?" imageUrl="https://images.unsplash.com/photo-1473625247510-8ceb1760943f?q=80&w=500&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
+          <CardWithImage title="Nos idées pour les vacances" imageUrl="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=500&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
+          <CardWithImage title="Vente flash" imageUrl="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?q=80&w=500&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
+          <CardWithImage title="Où partir ?" imageUrl="https://images.unsplash.com/photo-1530789253388-582c481c54b0?q=80&w=500&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
+          <CardWithImage title="Les abonnements" imageUrl="https://images.unsplash.com/photo-1670888664952-efff442ec0d2?q=80&w=500&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
+          <CardWithImage title="Train complet" imageUrl="https://images.unsplash.com/photo-1626544001303-f60b92396d47?q=80&w=500&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
+          <CardWithImage title="Envie de prolonger votre été ?" imageUrl="https://images.unsplash.com/photo-1473625247510-8ceb1760943f?q=80&w=500&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
+          <CardWithImage title="Nos idées pour les vacances" imageUrl="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=500&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
+          <CardWithImage title="Vente flash" imageUrl="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?q=80&w=500&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
+          <CardWithImage title="Où partir ?" imageUrl="https://images.unsplash.com/photo-1530789253388-582c481c54b0?q=80&w=500&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
+          <CardWithImage title="Les abonnements" imageUrl="https://images.unsplash.com/photo-1670888664952-efff442ec0d2?q=80&w=500&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
         </section>
         <section className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 mb-16">
           <div className="flex items-center gap-4 mb-6">
@@ -447,7 +448,7 @@ function CardWithImage({ title, imageUrl }: { title: string; imageUrl: string })
       <img
         src={imageUrl}
         className="absolute inset-0 w-full h-full object-cover -z-10"
-        alt=""
+        alt={`Image illustrant ${title}`}
       />
       <div className="relative z-10 flex items-center gap-4">
         <div>
