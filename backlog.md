@@ -14,7 +14,7 @@
 - 🧱 BP associée : Favoriser un design simple et implémenter un dark mode
 - 📗 Référence : [0012, 115 bonnes pratiques, coll. GreenIt] (https://rweb.greenit.fr/fr/fiches/RWEB_0005-favoriser-un-design-simple-epure-adapte-au-web) 
 - 🛠️ KPI : Taux d'abandon et de conversion(Google analytics, Hotjar) + contrast (WCAG Contrast checker, Lighthouse)
-- 📅 Tag roadmap : M1, M2 et M3
+- 📅 Tag roadmap : 004 - priorité moyenne
 
 ---
 
@@ -28,7 +28,7 @@
 - 🧱 BP associée : Dimensionner correctement
 - 📗 Référence : [0036, 115 bonnes pratiques, coll. GreenIt](https://rweb.greenit.fr/fr/fiches/RWEB_0034-ne-pas-redimensionner-les-images-cote-navigateur)
 - 🛠️ KPI : poids total dossier `/assets`
-- 📅 Tag roadmap : M3
+- 📅 Tag roadmap : 003 - priorité moyenne
 
 ---
 
@@ -42,7 +42,7 @@
 - 🧱 BP associée : Utiliser le chargement paresseux (lazy loading)
 - 📗 Référence : [0037, 115 bonnes pratiques, coll. GreenIt](https://rweb.greenit.fr/fr/fiches/RWEB_0037-utiliser-le-chargement-paresseux)
 - 🛠️ KPI : LCP(Lighthouse)
-- 📅 Tag roadmap : M2
+- 📅 Tag roadmap : 001 - priorité haute
 
 ---
 
@@ -56,7 +56,7 @@
 - 🧱 BP associée : Choisir un hébergeur éco-responsable
 - 📗 Référence : [0086, 115 bonnes pratiques, coll. GreenIt](https://rweb.greenit.fr/fr/fiches/RWEB_0086-choisir-un-hebergeur-eco-responsable)
 - 🛠️ KPI : GES(EcoIndex), localisation des data centers et mix énergétique du pays(Electricitymaps)
-- 📅 Tag roadmap : M2
+- 📅 Tag roadmap : 005 - priorité basse
 
 ---
 
@@ -70,4 +70,4 @@
 - 🧱 BP associée : Limiter le nombre de connexions aux bases de données
 - 📗 Référence : [0073, 115 bonnes pratiques, coll. GreenIt](https://rweb.greenit.fr/fr/fiches/RWEB_0073-ne-se-connecter-a-une-base-de-donnees-que-si-necessaire)
 - 🛠️ KPI : Log, requête SQL selon le SGBD pour lister les connexions actives
-- 📅 Tag roadmap : M3
+- 📅 Tag roadmap : 002 - priorité haute
