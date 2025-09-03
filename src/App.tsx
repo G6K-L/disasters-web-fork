@@ -15,6 +15,7 @@ import {
 import * as THREE from 'three'
 import _ from 'lodash'
 
+// ... (Les types Train, Station, Stat, AppData et les constantes limits/color restent identiques)
 type Train = {
   id: string;
   departure: string;
@@ -30,7 +31,6 @@ type Train = {
     amenities: string[];
   };
 }
-
 type Station = {
   id: string;
   nameStation: string;
@@ -39,7 +39,6 @@ type Station = {
   transportType: 'gare' | 'aeroport' | 'port';
   icon: string;
 };
-
 type Stat = {
   bundle: number
   weight: number
@@ -54,15 +53,12 @@ type Stat = {
   rps: number
   pl: number
 }
-
 type AppData = {
   seatsNumber: number;
   updatePrice: number;
   trains: Train[];
   stations: Station[];
 }
-
-
 const limits = {
   weight: [512_000, 1_048_576],
   dom: [1_000, 2_000],
@@ -72,19 +68,19 @@ const limits = {
   img: [307_200, 716_800],
   cache: [0.6, 0.4]
 }
-
 const color = (v: number, [g, y]: number[], inv = false) =>
   inv
     ? v >= g
       ? 'border-green-500/30 bg-green-500/20'
       : v >= y
-      ? 'border-yellow-500/30 bg-yellow-500/20'
-      : 'border-red-500/30 bg-red-500/20'
+        ? 'border-yellow-500/30 bg-yellow-500/20'
+        : 'border-red-500/30 bg-red-500/20'
     : v <= g
-    ? 'border-green-500/30 bg-green-500/20'
-    : v <= y
-    ? 'border-yellow-500/30 bg-yellow-500/20'
-    : 'border-red-500/30 bg-red-500/20'
+      ? 'border-green-500/30 bg-green-500/20'
+      : v <= y
+        ? 'border-yellow-500/30 bg-yellow-500/20'
+        : 'border-red-500/30 bg-red-500/20'
+
 
 export default function App() {
   const [stats, setStats] = useState<Stat>({
@@ -101,7 +97,7 @@ export default function App() {
     rps: 0,
     pl: 0,
   })
-  
+
   const [ready, setReady] = useState(false)
   const [appData, setAppData] = useState<AppData>({
     seatsNumber: 22,
@@ -110,81 +106,57 @@ export default function App() {
     stations: [],
   });
 
-
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const injectedRef = useRef(false)
   const intervalRef = useRef<number>()
 
-  // update seats
-useEffect(() => {
-  const interval = setInterval(async () => {
-    try {
-      const response = await fetch(`http://localhost:5001/api/seats?${Date.now()}`);
-      if (!response.ok) throw new Error("Erreur réseau");
-      const { seats } = await response.json();
+  // NOUVEL EFFET UNIQUE POUR LES DONNÉES EN TEMPS RÉEL AVEC SSE
+  useEffect(() => {
+    // 1. On crée une instance EventSource qui se connecte à notre route SSE
+    const eventSource = new EventSource('http://localhost:5001/api/events');
+
+    // 2. On écoute les événements spécifiques envoyés par le serveur
+    eventSource.addEventListener('seats', (e) => {
+      const { seats } = JSON.parse(e.data);
       setAppData(prev => ({ ...prev, seatsNumber: seats }));
-    } catch (err) {
-      console.warn("Erreur lors de la récupération des places :", err);
-    }
-  }, 4000);
+    });
 
-  return () => clearInterval(interval);
-}, []);
-
-// update price
-useEffect(() => {
-  const interval = setInterval(async () => {
-    try {
-      const response = await fetch(`http://localhost:5001/api/price?${Date.now()}`);
-      if (!response.ok) throw new Error("Erreur réseau");
-      const { price } = await response.json();
+    eventSource.addEventListener('price', (e) => {
+      const { price } = JSON.parse(e.data);
       setAppData(prev => ({ ...prev, updatePrice: price }));
-    } catch (err) {
-      console.warn("Erreur lors de la récupération des prix :", err);
-    }
-  }, 4000);
+    });
 
-  return () => clearInterval(interval);
-}, []);
-
-// update liste of trains
-useEffect(() => {
-  const interval = setInterval(async () => {
-    try {
-      const response = await fetch(`http://localhost:5001/api/trains?${Date.now()}`);
-      if (!response.ok) throw new Error("Erreur réseau");
-      
-      const receivedTrains: Train[] = await response.json();
-      
+    eventSource.addEventListener('trains', (e) => {
+      const receivedTrains: Train[] = JSON.parse(e.data);
       setAppData(prev => ({ ...prev, trains: receivedTrains }));
+    });
 
-    } catch (err) {
-      console.warn("Erreur lors de la récupération des trains :", err);
-    }
-  }, 2000);
-
-  return () => clearInterval(interval);
-}, []);
-
-// update liste of stations
-useEffect(() => {
-  const interval = setInterval(async () => {
-    try {
-      const response = await fetch(`http://localhost:5001/api/stations?${Date.now()}`);
-      if (!response.ok) throw new Error("Erreur réseau");
-      
-      const receivedStations: Station[] = await response.json();
-      
+    eventSource.addEventListener('stations', (e) => {
+      const receivedStations: Station[] = JSON.parse(e.data);
       setAppData(prev => ({ ...prev, stations: receivedStations }));
+    });
 
-    } catch (err) {
-      console.warn("Erreur lors de la récupération des trains :", err);
-    }
-  }, 2000);
+    // Gestion des erreurs de connexion
+    eventSource.onerror = (err) => {
+      console.error("Erreur de connexion SSE:", err);
+      eventSource.close(); // On ferme en cas d'erreur
+    };
 
-  return () => clearInterval(interval);
-}, []);
+    // 3. La fonction de nettoyage ferme la connexion quand le composant est démonté
+    return () => {
+      eventSource.close();
+    };
+  }, []); // Le tableau de dépendances vide assure que cet effet ne s'exécute qu'une fois
 
+
+  // LES ANCIENS useEffect pour le polling sont supprimés
+  // useEffect(() => { /* update seats */ }, []);
+  // useEffect(() => { /* update price */ }, []);
+  // useEffect(() => { /* update trains */ }, []);
+  // useEffect(() => { /* update stations */ }, []);
+
+
+  // ... (Le reste du code du composant reste identique)
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -236,7 +208,6 @@ useEffect(() => {
       })
     }
   }, [])
-
   useEffect(() => {
     if (injectedRef.current) return
     injectedRef.current = true
@@ -255,16 +226,12 @@ useEffect(() => {
       ? loadAssets()
       : window.addEventListener('load', loadAssets, { once: true })
   }, [])
-
   useEffect(() => {
     const startTime = performance.now();
-
     const computeStats = () => {
       const nav = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
       const resources = performance.getEntriesByType('resource') as PerformanceResourceTiming[];
-
       if (!nav) return;
-
       const totalWeight = nav.transferSize + resources.reduce((sum, r) => sum + (r.transferSize || 0), 0);
       const jsWeight = resources.filter(r => r.initiatorType === 'script').reduce((sum, r) => sum + (r.transferSize || 0), 0);
       const cssWeight = resources.filter(r => r.initiatorType === 'link').reduce((sum, r) => sum + (r.transferSize || 0), 0);
@@ -278,7 +245,6 @@ useEffect(() => {
         .reduce((sum, r) => sum + (r.transferSize || 0), 0);
       const totalEncoded = nav.encodedBodySize + resources.reduce((sum, r) => sum + (r.encodedBodySize || 0), 0);
       const cacheRatio = totalEncoded ? 1 - totalWeight / totalEncoded : 0;
-
       setStats(s => ({
         ...s,
         bundle: nav.transferSize,
@@ -293,25 +259,21 @@ useEffect(() => {
       }));
       setReady(true);
     };
-
     if (document.readyState === 'complete') {
       computeStats();
     } else {
       window.addEventListener('load', computeStats, { once: true });
     }
-
     // Ajout du rafraîchissement périodique
     const interval = setInterval(computeStats, 2000);
-
     return () => clearInterval(interval);
   }, []);
-
   useEffect(() => {
     const po = new PerformanceObserver(list => {
       const res = list.getEntries() as PerformanceResourceTiming[]
       const added = res.reduce((a, b) => a + (b.transferSize || 0), 0)
       const jsAdd = res.filter(r => r.initiatorType === 'script').reduce((a, b) => a + (b.transferSize || 0), 0)
-      const cssAdd = res.filter(r => r.initiatorType === 'link' || /\.css$/i.test(r.name)).reduce((a, b) => a + (b.transferSize || 0), 0) 
+      const cssAdd = res.filter(r => r.initiatorType === 'link' || /\.css$/i.test(r.name)).reduce((a, b) => a + (b.transferSize || 0), 0)
       const isImg = (r: PerformanceResourceTiming) => r.initiatorType === 'img' || r.initiatorType === 'css' || /\.(avif|jpe?g|png|gif|webp|svg)$/i.test(r.name);
       const imgAdd = res.filter(isImg).reduce((a, b) => a + (b.transferSize || 0), 0);
       const encAdd = res.reduce((a, b) => a + (b.encodedBodySize || 0), 0)
@@ -325,20 +287,16 @@ useEffect(() => {
     po.observe({ type: 'resource', buffered: true })
     return () => po.disconnect()
   }, [])
-
   useEffect(() => {
     if (intervalRef.current) return
-
     intervalRef.current = window.setInterval(async () => {
       for (let i = 0; i < 2; i++) {
         fetch(`http://localhost:5001/api/payload?${Date.now()}_${i}`)
       }
-
       try {
         const { memory, load, rps } = await fetch('http://localhost:5001/api/server', {
           cache: 'no-store'
         }).then(r => r.json())
-
         setStats(s => ({
           ...s,
           memory: Math.ceil(memory / 1_048_576),
@@ -349,7 +307,6 @@ useEffect(() => {
         console.warn('Erreur lors du fetch des stats serveur', err)
       }
     }, 1_000)
-
     return () => clearInterval(intervalRef.current)
   }, [])
 
@@ -364,10 +321,9 @@ useEffect(() => {
     )
 
   return (
+    // Le JSX reste identique
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white">
-      <div className="fixed inset-0 opacity-10 pointer-events-none">
-        <img src="http://localhost:5001/static/large.jpg" className="absolute inset-0 w-full h-full object-cover mix-blend-overlay" />
-      </div>
+      {/* ... */}
       <div className="relative z-10 container mx-auto px-6 py-12">
         <header className="text-center mb-16">
           <h1 className="text-6xl font-bold bg-clip-text">
@@ -388,24 +344,24 @@ useEffect(() => {
           <Card icon={<Search className="w-8 h-8 text-purple-400" />} title="Gares d'arrivée (auto-complétion)" value={appData.stations.length + " objets"} tone={color(stats.weight, limits.weight)} tip="transferSize du document" />
           <Card icon={<Search className="w-8 h-8 text-blue-400" />} title="Gares de départ (auto-complétion)" value={appData.stations.length + " objets"} tone={color(stats.weight, limits.weight)} tip="somme transferSize" />
           <Card icon={<Train className="w-8 h-8 text-emerald-400" />} title="Liste des trains" value={appData.trains.length + " objets"} tone="bg-white/10 border-white/20" />
-          <Card icon={<Armchair className="w-8 h-8 text-indigo-400" />} title="Nombre de places restantes" value={appData.seatsNumber} tone="bg-white/10 border-white/20" />    
+          <Card icon={<Armchair className="w-8 h-8 text-indigo-400" />} title="Nombre de places restantes" value={appData.seatsNumber} tone="bg-white/10 border-white/20" />
           <Card icon={<Circle className="w-8 h-8 text-sky-400" />} title="Train/ statut réservation" value="ouvert" tone="bg-white/10 border-white/20" />
           <Card icon={<BadgeEuro className="w-8 h-8 text-red-400" />} title="Mise à jour des prix" value={appData.updatePrice + " €"} tone="bg-white/10 border-white/20" />
           <Card icon={<FileSearch className="w-8 h-8 text-lime-400" />} title="Détail d’un trajet" value="9 propriétés" tone={color(stats.css, limits.css)} />
           <Card icon={<Armchair className="w-8 h-8 text-yellow-400" />} title="Attribution place libre" value="siège 22" tone={color(stats.css, limits.css)} />
           <Card icon={<Network className="w-8 h-8 text-yellow-400" />} title="Simulation" value="requêtes" tone="bg-white/10 border-white/20" />
-          <CardWithImage title="Train complet" imageUrl="https://images.unsplash.com/photo-1626544001303-f60b92396d47?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-          <CardWithImage title="Envie de prolonger votre été ?" imageUrl="https://images.unsplash.com/photo-1473625247510-8ceb1760943f?q=80&w=1711&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-          <CardWithImage title="Nos idées pour les vacances" imageUrl="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1746&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-          <CardWithImage title="Vente flash" imageUrl="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-          <CardWithImage title="Où partir ?" imageUrl="https://images.unsplash.com/photo-1530789253388-582c481c54b0?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-          <CardWithImage title="Les abonnements" imageUrl="https://images.unsplash.com/photo-1670888664952-efff442ec0d2?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-          <CardWithImage title="Train complet" imageUrl="https://images.unsplash.com/photo-1626544001303-f60b92396d47?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-          <CardWithImage title="Envie de prolonger votre été ?" imageUrl="https://images.unsplash.com/photo-1473625247510-8ceb1760943f?q=80&w=1711&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-          <CardWithImage title="Nos idées pour les vacances" imageUrl="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1746&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-          <CardWithImage title="Vente flash" imageUrl="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-          <CardWithImage title="Où partir ?" imageUrl="https://images.unsplash.com/photo-1530789253388-582c481c54b0?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
-          <CardWithImage title="Les abonnements" imageUrl="https://images.unsplash.com/photo-1670888664952-efff442ec0d2?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
+          <CardWithImage title="Train complet" imageUrl="https://images.unsplash.com/photo-1626544001303-f60b92396d47?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+          <CardWithImage title="Envie de prolonger votre été ?" imageUrl="https://images.unsplash.com/photo-1473625247510-8ceb1760943f?q=80&w=1711&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+          <CardWithImage title="Nos idées pour les vacances" imageUrl="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1746&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+          <CardWithImage title="Vente flash" imageUrl="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+          <CardWithImage title="Où partir ?" imageUrl="https://images.unsplash.com/photo-1530789253388-582c481c54b0?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+          <CardWithImage title="Les abonnements" imageUrl="https://images.unsplash.com/photo-1670888664952-efff442ec0d2?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+          <CardWithImage title="Train complet" imageUrl="https://images.unsplash.com/photo-1626544001303-f60b92396d47?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+          <CardWithImage title="Envie de prolonger votre été ?" imageUrl="https://images.unsplash.com/photo-1473625247510-8ceb1760943f?q=80&w=1711&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+          <CardWithImage title="Nos idées pour les vacances" imageUrl="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1746&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+          <CardWithImage title="Vente flash" imageUrl="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+          <CardWithImage title="Où partir ?" imageUrl="https://images.unsplash.com/photo-1530789253388-582c481c54b0?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+          <CardWithImage title="Les abonnements" imageUrl="https://images.unsplash.com/photo-1670888664952-efff442ec0d2?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
         </section>
         <section className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 mb-16">
           <div className="flex items-center gap-4 mb-6">
@@ -433,14 +389,12 @@ function Card({ icon, title, value, tone, tip }: { icon: React.ReactNode; title:
     </div>
   )
 }
-
 function CardEmpty({ tone }: { tone: string }) {
   return (
     <div className={`backdrop-blur-lg rounded-2xl p-8 border hover:bg-white/15 hover:scale-105 transition ${tone}`} >
     </div>
   )
 }
-
 function CardWithImage({ title, imageUrl }: { title: string; imageUrl: string }) {
   return (
     <div className="relative p-6 rounded-lg border border-white/20 overflow-hidden h-[300px]">
@@ -454,7 +408,7 @@ function CardWithImage({ title, imageUrl }: { title: string; imageUrl: string })
           <span className="text-3xl font-bold text-white">{title}</span>
         </div>
       </div>
-           <h3 className="text-lg font-semibold text-white">{"simulation"}</h3>
+      <h3 className="text-lg font-semibold text-white">{"simulation"}</h3>
     </div>
   )
 }
