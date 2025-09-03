@@ -446,6 +446,7 @@ function CardWithImage({ title, imageUrl }: { title: string; imageUrl: string })
     <div className="relative p-6 rounded-lg border border-white/20 overflow-hidden h-[300px]">
       <img
         src={imageUrl}
+        loading="lazy"
         className="absolute inset-0 w-full h-full object-cover -z-10"
         alt=""
       />
